@@ -59,12 +59,54 @@ void addNode(int data, struct Node* head)
     trav->next = newNode;
     // at end of list, create a new npde
 }
-int pop(struct Node* head)
+int pot(struct Node* head)
 {
-    // get the data
-    // point to second to last node
-    trav = data - 1;
-    // free the last node
+    // create the traveller
+    struct Node* trav = head;
+    int counter = 0;
 
-    // have travellet point to the last item in the list
+    // find the second to last node
+    while(trav->next=>next-> != NULL)
+    {
+        printf("%i", counter++);
+        trav = trav->next;
+    }
+    // store the data from the last item in the list
+    int data = trav->next->data;
+    // free the last block of memory
+    free(trav->next);
+    // set the new last node to NULL
+    trav->next = NULL;
+    return data;
+
 }
+
+
+// go to last item, looks at last number and returns it
+int peek(struct Node* head)
+{
+    struct Node* trav = head;
+
+    while(trav->next != NULL)
+    {
+        trav = trav->next;
+    }
+    int data = trav->next->data;
+    return data;
+}
+
+
+
+// mine
+// int pop(struct Node* head)
+// {
+//     // get the data
+//     int that_num = trav->next->data;
+//     // have travellet point to 2nd to last item in the list
+//     trav->newNode - 1;
+//     // free the last node
+//     free(newNode);
+//     // point the last node to null
+//     trav->next = NULL;
+//     return that_num;
+// }
