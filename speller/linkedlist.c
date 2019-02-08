@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node
 {
@@ -59,16 +60,16 @@ void addNode(int data, struct Node* head)
     trav->next = newNode;
     // at end of list, create a new npde
 }
-int pot(struct Node* head)
+int pop(struct Node* head)
 {
     // create the traveller
     struct Node* trav = head;
-    int counter = 0;
+    // int counter = 0;
 
     // find the second to last node
     while(trav->next=>next-> != NULL)
     {
-        printf("%i", counter++);
+        // printf("%i", counter++);
         trav = trav->next;
     }
     // store the data from the last item in the list
@@ -81,17 +82,20 @@ int pot(struct Node* head)
 
 }
 
-
 // go to last item, looks at last number and returns it
 int peek(struct Node* head)
 {
     struct Node* trav = head;
 
+    //  as long as the next pointer is not null
     while(trav->next != NULL)
     {
+        // travel down the list
         trav = trav->next;
     }
-    int data = trav->next->data;
+    // gather the data at the last node
+    int data = trav->data;
+    // return that data
     return data;
 }
 
