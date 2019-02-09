@@ -8,6 +8,12 @@ typedef struct Node
     struct Node *next;     // Node here completes the struct Node
 } Node;       //  use Node to complete the typedef Node
 
+
+void push(int, struct Nonde*);
+int pop(struct Node*);
+int peek(struct Node*);
+void freeLIst(Node*);    // free the memory of the list
+
 int main(void)
 {
     // this is making a
@@ -25,10 +31,10 @@ int main(void)
     //  give head data and have it point to the next node in the linked list
     head->data = 5;
     head->next = second;
-    second->data = 9;
-    second->next = third;
-    third->data = 3;
-    third->next = NULL;
+    // second->data = 9;
+    // second->next = third;
+    // third->data = 3;
+    // third->next = NULL;
 
     //  another way to do the same thing as above
     // head->next->data = 7;
@@ -66,6 +72,14 @@ int pop(struct Node* head)
     struct Node* trav = head;
     // int counter = 0;
 
+    // make a case for what happens for one node list
+      if (trav->next == NULL)
+    {
+        int data = trav;
+        free(trav->next);
+        return data;
+    }
+
     // find the second to last node
     while(trav->next=>next-> != NULL)
     {
@@ -78,6 +92,7 @@ int pop(struct Node* head)
     free(trav->next);
     // set the new last node to NULL
     trav->next = NULL;
+    // returns the data that was in the node
     return data;
 
 }
@@ -86,6 +101,7 @@ int pop(struct Node* head)
 int peek(struct Node* head)
 {
     struct Node* trav = head;
+
 
     //  as long as the next pointer is not null
     while(trav->next != NULL)
@@ -98,6 +114,41 @@ int peek(struct Node* head)
     // return that data
     return data;
 }
+
+// every version of this function believes it is the root
+void freeList(Node* root)
+{
+    // pointing at the top item in the list. base case looks for second to last item or call function till we are on second last item
+    struct Node* trav = root;
+
+    // if we are on a single item list this keeps it from crashing
+    if (trav->next == NULL)
+    {
+        free(trav);
+        return;
+    }
+
+    //  if we are on second last item
+    if (trav->next->next == NULL)
+    {
+        //  free the last item from memory
+        free(trav->next);
+        // have the node erase itself and move to current node
+        free(trav);
+        // //  set final pointer to null, but will give false positive
+        // trav->next = NULL;
+        // go back up the list of function calls use RETURN
+        return
+    }
+    // rerun freeList function to find what is now second last items
+    freeList(trav->next);
+    // recursively removes current nodes till it gets back to noce 1
+    free(root);
+    return;
+}
+
+
+
 
 
 
