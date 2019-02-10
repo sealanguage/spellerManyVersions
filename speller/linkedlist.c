@@ -40,7 +40,7 @@ int main(void)
     // head->next->data = 7;
     // head->next->next = third;
     // head->next->next->data = 0;
-    // head->next->mext->next = NULL;
+    // head->next->next->next = NULL;
 }
 
 // writing a function to dynamically add data to the linked list
@@ -73,10 +73,13 @@ int pop(struct Node* head)
     // int counter = 0;
 
     // make a case for what happens for one node list
+    // trav->next == NULL means this is a single item list
       if (trav->next == NULL)
     {
+        // make a data variable at the node,
         int data = trav;
-        free(trav->next);
+        // free the node
+        free(trav);
         return data;
     }
 
@@ -102,6 +105,12 @@ int peek(struct Node* head)
 {
     struct Node* trav = head;
 
+    //  code to deal with single node list,
+    if(trav->next == NULL)
+    {
+        int data = trav;
+        return data;
+    }
 
     //  as long as the next pointer is not null
     while(trav->next != NULL)
@@ -121,9 +130,10 @@ void freeList(Node* root)
     // pointing at the top item in the list. base case looks for second to last item or call function till we are on second last item
     struct Node* trav = root;
 
-    // if we are on a single item list this keeps it from crashing
+    // if we are on a single item list code runs, else it moves to the next statement
     if (trav->next == NULL)
     {
+        // removes the single item
         free(trav);
         return;
     }
