@@ -9,28 +9,46 @@ typedef struct Node
 } Node;       //  use Node to complete the typedef Node
 
 
-void push(int, struct Nonde*);
+void push(int, struct Node*);
 int pop(struct Node*);
-int peek(struct Node*);
-void freeLIst(Node*);    // free the memory of the list
+// int peek(struct Node*);
+void freeList(Node*);    // free the memory of the list
 
 int main(void)
 {
     // this is making a
     printf("hello\n");
+    Node* list = NULL;
+
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = 5;
+    newNode->next = NULL;
+
+    // error here---------
+    list = newNode;
+
+    push(3, list);
+    push(12, list);
+    printf("%i\n", pop(list));
+    push(14, list);
+    printf("%i\n", pop(list));
+    freeList(list);
+
+    // int result = pop(head);
 
     // keep tract of the head of the Node
-    struct Node* head = NULL;      //  pointer to a node
-    struct Node* second = NULL;     //  pointer to a node
-    struct Node* third = NULL;     //  pointer to a node
+    // // remove after setting head to NULL above
+    // struct Node* head = NULL;      //  pointer to a node
+    // struct Node* second = NULL;     //  pointer to a node
+    // struct Node* third = NULL;     //  pointer to a node
 
-    head = (struct Node*)malloc(sizeof(struct Node));   //  struct Node* is pointer to memory of Node
-    second = (struct Node*)malloc(sizeof(struct Node));
-    third = (struct Node*)malloc(sizeof(struct Node));
+    // head = (struct Node*)malloc(sizeof(struct Node));   //  struct Node* is pointer to memory of Node
+    // second = (struct Node*)malloc(sizeof(struct Node));
+    // third = (struct Node*)malloc(sizeof(struct Node));
 
     //  give head data and have it point to the next node in the linked list
-    head->data = 5;
-    head->next = second;
+    // head->data = 5;
+    // head->next = second;
     // second->data = 9;
     // second->next = third;
     // third->data = 3;
@@ -49,6 +67,11 @@ void addNode(int data, struct Node* head)
 {
     struct Node* trav = head;
 
+    while(trav != NULL && trav->next != NULL)
+    {
+        trav = trav->next;
+    }
+
     // go to the end of the list
     while(trav->next != NULL)
     {
@@ -61,8 +84,15 @@ void addNode(int data, struct Node* head)
 
     // alternate way to do above
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data
+    newNode->data = data;
     newNode->next = NULL;
+
+    //  initialize the next to null
+    if (trav == NULL)
+    {
+        head = newNode;
+        return;
+    }
     trav->next = newNode;
     // at end of list, create a new npde
 }
@@ -70,21 +100,27 @@ int pop(struct Node* head)
 {
     // create the traveller
     struct Node* trav = head;
+
+    if (trav == NULL)
+    {
+        return -1;
+    }
     // int counter = 0;
 
     // make a case for what happens for one node list
     // trav->next == NULL means this is a single item list
       if (trav->next == NULL)
     {
-        // make a data variable at the node,
-        int data = trav;
+        // make a data variable at the node
+        // error here ----------
+        int data = trav->data;
         // free the node
         free(trav);
         return data;
     }
 
     // find the second to last node
-    while(trav->next=>next-> != NULL)
+    while(trav->next->next != NULL)
     {
         // printf("%i", counter++);
         trav = trav->next;
@@ -108,7 +144,7 @@ int peek(struct Node* head)
     //  code to deal with single node list,
     if(trav->next == NULL)
     {
-        int data = trav;
+        int trav = trav->next;
         return data;
     }
 
@@ -130,7 +166,13 @@ void freeList(Node* root)
     // pointing at the top item in the list. base case looks for second to last item or call function till we are on second last item
     struct Node* trav = root;
 
-    // if we are on a single item list code runs, else it moves to the next statement
+    //  for the case where a header pointer exists but there is nothing in it.
+    if (trav == NULL)
+    {
+        return;
+    }
+
+    // if we are on a single item, list code runs, frees the memory for the node effectively erasing it, else it moves to the next statement
     if (trav->next == NULL)
     {
         // removes the single item
@@ -148,7 +190,7 @@ void freeList(Node* root)
         // //  set final pointer to null, but will give false positive
         // trav->next = NULL;
         // go back up the list of function calls use RETURN
-        return
+        return;
     }
     // rerun freeList function to find what is now second last items
     freeList(trav->next);
