@@ -12,7 +12,7 @@ typedef struct Node
 
 void push(int, struct Node*);
 int pop(struct Node*);
-// int peek(struct Node*);
+int peek(struct Node*);
 void freeList(Node*);    // free the memory of the list
 
 int main(void)
@@ -25,7 +25,6 @@ int main(void)
     newNode->data = 5;
     newNode->next = NULL;
 
-    // error here---------
     list = newNode;
 
     push(3, list);
@@ -97,6 +96,7 @@ void addNode(int data, struct Node* head)
     trav->next = newNode;
     // at end of list, create a new npde
 }
+
 int pop(struct Node* head)
 {
     // create the traveller
@@ -139,14 +139,11 @@ int pop(struct Node* head)
 // go to last item, looks at last number and returns it
 int peek(struct Node* head)
 {
-    // has error here -----------
     struct Node* trav = head;
 
     //  code to deal with single node list,
     if(trav->next == NULL)
     {
-        // has error here -----------
-        int trav = trav->next;
         int data = trav->data;
         return data;
     }
