@@ -25,6 +25,7 @@ int main(void)
     newNode->data = 5;
     newNode->next = NULL;
 
+
     list = newNode;
 
     push(3, list);
