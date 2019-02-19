@@ -200,6 +200,17 @@ void freeList(Node* root)
     return;
 }
 
-
+void freeListNew(Node* trav)
+{
+    // check if we are on last node
+    if(trav->next == NULL)
+    {
+        free(trav);
+        return;
+        // this recursion is like doing a factorialize (fac 5 = 5 x 4, fac 4 = 4 x 3)
+        freeListNew(trav->next);
+        free(trav);
+    }
+}
 
 

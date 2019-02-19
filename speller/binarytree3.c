@@ -21,8 +21,10 @@ typedef struct BinaryNode
 
 // common syntax at the top of a binary tree
 BinaryNode* root = NULL;
+// declare the functions here
 void add(int);
 int seek(int);  //  true 1 of flase 0 if item exists in tree
+void freeTree();
 
 // function to run to see if add and seek will work
 void testTree()
@@ -40,7 +42,17 @@ void testAdd()
     add(5);
     assert(seek(5) && "found the added 5");
     add(2);
-    assert(seek(2) && "found the added 2");
+    assert(seek(2) && "found the new number 2");
+    assert(seek(5) && "5 still exists");
+    add(1);
+    assert(seek(1) && "1 was added successfully");
+    assert(seek(2) && "2 still exists");
+    add(8);
+    assert(seek(8) && "8 was found");
+    add(9);
+    add(3);
+    assert(seek(9) && seek(3) && "9 and 3 were found");
+    assert(seek(8) && "8 still exists");
 
 }
 
@@ -102,7 +114,8 @@ int seek(int query)
     BinaryNode* nav = root;
 
     // this is like creating an event loop waiting for an event - repeat the code till it reaches a conditional
-    while(true && "Not at the end of a branch or haven't found the data yet") {
+    while(true && "Not at the end of a branch or haven't found the data yet")
+    {
         // c sees while true because string is truthy
 
 
@@ -183,38 +196,47 @@ void add(int item)
     while("end of branch not found")  //  this text string is truthy because it is a string not empty
     {
         // if item is smaller than root
-        if (nav->data > item)
+        if (item < nav->data)
         {
             // if there is no node on the smaller route
-            if (nav->smaller == NULL)
+            if (nav->smaller != NULL)
             {
-                // put the node here
-                nav->smaller = newNode;
+                //  look before you leap
+                // travel to the left
+                nav = nav->smaller;
+                // because of continue the loop won't
+                continue;
 
-                return;
             }
-            // move the navigation to the left
-            nav = nav->smaller;
-            // put the item value in the new node
-            nav = nav->smaller;
-            nav->smaller->data = item;
-            continue;
-
-            // // add  2 to the node
-            // nav->smaller = NULL;
-            // nav = item;
-            // printf("%i\n new node data now is", item);
+            nav->smaller = newNode;
+            return;
         }
 
-        // if item is larger than root
-        // if (nav->data < item)
-        // {
-        //     return;
-        // }
+            // add the larger item to the right
+        if (item > nav->data)
+        {
+
+            // go larger
+            if (nav->larger != NULL)
+            {
+                nav = nav->larger;
+                continue;
+            }
+            nav->larger = newNode;
+            return;
+        }
         return;
     }
 }
 
+void freeTree()
+{
+    // free all the nodes in the tree
+    // navigate through the tree and start freeing from the end of the branches
+
+
+
+}
 
 // if (nav->data > query)
 //         // is current node larger or smaller than query searched number
