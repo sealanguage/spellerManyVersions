@@ -23,8 +23,8 @@ typedef struct BinaryNode
 BinaryNode* root = NULL;
 // declare the functions here
 void add(int);
-int seek(int);  //  true 1 of flase 0 if item exists in tree
-void freeTree();
+int seek(int);  //  true 1 or flase 0 if item exists in tree
+void freeTree(BinaryNode*);
 
 // function to run to see if add and seek will work
 void testTree()
@@ -53,6 +53,24 @@ void testAdd()
     add(3);
     assert(seek(9) && seek(3) && "9 and 3 were found");
     assert(seek(8) && "8 still exists");
+
+}
+
+void testFree()
+{
+    add(5);
+    assert(seek(5) && "5 was added");
+    add(2);
+    add(1);
+    add(8);
+    add(3);
+    add(9);
+    freeTree(root);
+    assert(!seek(5) && "5 was cleared");
+    assert(!seek(2) && "2 was cleared");
+    assert(!seek(1) && "1 was cleared");
+    assert(!seek(8) && "8 was cleared");
+
 
 }
 
@@ -96,8 +114,8 @@ int main(void)
     // int data[] = {5, 8, 2, 9, 4, 1, 3};
     // testTree();
     // testSeek();
-    testAdd();
-
+    // testAdd();
+    testFree();
 }
 
 
@@ -229,27 +247,30 @@ void add(int item)
     }
 }
 
-void freeTree()
+// finish this code: 19 feb
+void freeTree(BinaryNode* nav)
 {
     // free all the nodes in the tree
     // navigate through the tree and start freeing from the end of the branches
 
 
+    // BinaryNode* nav = root;
+    if (nav->smaller == NULL && nav->larger == NULL)
+    {
+        free(nav);
+        return;
+    }
+    // if code gets here, we know the node has childrn
+    if (nav->smaller != NULL)
+    {
+        freeTree(nav->smaller);
+
+    }
+    if (nav->larger != NULL)
+    {
+        freeTree(nav->larger);
+    }
+    free(nav);
+    return;
 
 }
-
-// if (nav->data > query)
-//         // is current node larger or smaller than query searched number
-//         {
-//             // go smallersmaller route
-//             // check if there is a node in that direction
-
-//             // if there is no node (NULL) return 0
-//             if (nav->smaller == NULL)
-//             {
-//                 return 0;
-//             }
-//             // if there is a node, continue seeking
-//             nav = nav->smaller;
-//             continue;
-//         }
